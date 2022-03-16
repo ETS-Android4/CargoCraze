@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -21,31 +20,18 @@ import java.util.Locale;
 
 public class Robot {
   //declare hardware variables
+
   //for the drive train
   public DcMotor frontLeft;
   public DcMotor frontRight;
   public DcMotor backLeft;
   public DcMotor backRight;
 
-  //measuring tape for parking in the building zone
- // public DcMotor measuringTape;
-
   //intake system
- // public DcMotor arm;
-  public DcMotor lift;
-  //public DcMotor rotatingM;
-  public CRServo clamp;
- // public Servo armStop;
-  public DcMotor carousel;
-  public DcMotor motion;
-
- // public DcMotor carousel2;
-  //public CRServo spinningFunction;
-
-  //for moving the foundation
- // public Servo leftFoundation;
- // public Servo rightFoundation;
-
+ public DcMotor arm;
+ //public CRServo rotationAxel;
+ public DcMotor carousel;
+ // public DcMotor motion;
 
   //variables to use IMU's
   public BNO055IMU imu;
@@ -73,29 +59,14 @@ public class Robot {
 
     frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-    //measuring tape
-   // measuringTape = hMap.dcMotor.get("measuringTape");
+    //frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    //backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     //intake system
-   // arm = hMap.dcMotor.get("arm");
-    lift = hMap.dcMotor.get("lift");
-    //rotatingM = hMap.dcMotor.get("rotatingM");
-   clamp = hMap.crservo.get("clamp");
-   // armStop = hMap.servo.get("armStop");
-    carousel = hMap.dcMotor.get("carousel");
-    motion = hMap.dcMotor.get("motion");
-    //carousel2 = hMap.dcMotor.get("carousel2");
-    //spinningFunction = hMap.crservo.get("spinningFunction");
-
-   // lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-    //foundation grabbers
-   // leftFoundation = hMap.servo.get("leftFoundation");
-   // rightFoundation = hMap.servo.get("rightFoundation");
-
+   arm = hMap.dcMotor.get("arm");
+   carousel = hMap.dcMotor.get("carousel");
+   //motion = hMap.dcMotor.get("motion");
+   //rotationAxel = hMap.crservo.get("rotationAxel");
 
     //Telemetry to show on phone to confirm that initialization occurred
     //telemetry.addLine("We done bois");//DS
@@ -211,21 +182,19 @@ public class Robot {
   public void drive(double fL, double fR, double bL, double bR){
       frontLeft.setPower(fL* dtSpeed);
       backLeft.setPower(bL* dtSpeed);
-      frontRight.setPower(fR* dtSpeed);
-      backRight.setPower(bR* dtSpeed);
+      //frontRight.setPower(fR* dtSpeed);
+      //backRight.setPower(bR* dtSpeed);
   }
 
-  public void stopMotors() {
+  /*public void stopMotors() {
     carousel.setPower(0);
     motion.setPower(0);
-    clamp.setPower(0);
-    lift.setPower(0);
-  }
+  }*/
   public void stopWheels(){
       frontLeft.setPower(0);
       backLeft.setPower(0);
-      frontRight.setPower(0);
-      backRight.setPower(0);
+      //frontRight.setPower(0);
+      //backRight.setPower(0);
   }
 
  /* public void foundationDown() {
@@ -239,55 +208,16 @@ public class Robot {
   }
 */
   public void strafeLeft(long time) {
-    frontRight.setPower(.4);
-    backRight.setPower(-.4);
+    //frontRight.setPower(.4);
+    //backRight.setPower(-.4);
     frontLeft.setPower(-.4);
     backLeft.setPower(.4);
   }
 
   public void strafeRight(long time) {
-    frontRight.setPower(-.4);
-    backRight.setPower(.4);
+    //frontRight.setPower(-.4);
+    //backRight.setPower(.4);
     frontLeft.setPower(.4);
     backLeft.setPower(-.4);
   }
-
-  public void dropBlock(){
-      motion.setPower(0.4);//raising the arm for a little
-      clamp.setPower(0.4);//opening the claw
-      stopMotors();
-    }
-
-
-
-
-  /*arm stop functions
-  public void armStopUp(){
-      armStop.setPosition(1);
-  }
-
-  public void armStopDown (){
-      armStop.setPosition(.5);
-  }*/
-
-/* power) {
-    leftIntake.setPower(-power);
-    rightIntake.setPower(power);
-  }
-  public void outtake(double power) {
-    leftIntake.setPower(power);
-    rightIntake.setPower(-power);
-  }
-
-
-    public void setLift () {
-        int newLiftTarget;
-
-        if(opModeIsActive()) {
-            newLiftTarget = lift.getCurrentPosition() + (int) (le)
-        }
-    }
-
- */
-
 }
