@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -29,9 +30,8 @@ public class Robot {
 
   //intake system
  public DcMotor arm;
- //public CRServo rotationAxel;
- public DcMotor carousel;
- // public DcMotor motion;
+ public CRServo intake;
+ public DcMotor extend;
 
   //variables to use IMU's
   public BNO055IMU imu;
@@ -59,14 +59,13 @@ public class Robot {
 
     frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    //frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    //backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     //intake system
    arm = hMap.dcMotor.get("arm");
-   carousel = hMap.dcMotor.get("carousel");
-   //motion = hMap.dcMotor.get("motion");
-   //rotationAxel = hMap.crservo.get("rotationAxel");
+   extend = hMap.dcMotor.get("motion");
+   intake = hMap.crservo.get("rotationAxel");
 
     //Telemetry to show on phone to confirm that initialization occurred
     //telemetry.addLine("We done bois");//DS
@@ -182,19 +181,20 @@ public class Robot {
   public void drive(double fL, double fR, double bL, double bR){
       frontLeft.setPower(fL* dtSpeed);
       backLeft.setPower(bL* dtSpeed);
-      //frontRight.setPower(fR* dtSpeed);
-      //backRight.setPower(bR* dtSpeed);
+      frontRight.setPower(fR* dtSpeed);
+      backRight.setPower(bR* dtSpeed);
   }
 
-  /*public void stopMotors() {
-    carousel.setPower(0);
-    motion.setPower(0);
-  }*/
+  public void stopMotors() {
+    extend.setPower(0);
+    arm.setPower(0);
+    intake.setPower(0);
+  }
   public void stopWheels(){
       frontLeft.setPower(0);
       backLeft.setPower(0);
-      //frontRight.setPower(0);
-      //backRight.setPower(0);
+      frontRight.setPower(0);
+      backRight.setPower(0);
   }
 
  /* public void foundationDown() {
@@ -208,15 +208,15 @@ public class Robot {
   }
 */
   public void strafeLeft(long time) {
-    //frontRight.setPower(.4);
-    //backRight.setPower(-.4);
+    frontRight.setPower(.4);
+    backRight.setPower(-.4);
     frontLeft.setPower(-.4);
     backLeft.setPower(.4);
   }
 
   public void strafeRight(long time) {
-    //frontRight.setPower(-.4);
-    //backRight.setPower(.4);
+    frontRight.setPower(-.4);
+    backRight.setPower(.4);
     frontLeft.setPower(.4);
     backLeft.setPower(-.4);
   }

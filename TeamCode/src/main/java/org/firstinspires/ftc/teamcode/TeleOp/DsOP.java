@@ -68,29 +68,29 @@ public class DsOP extends OpMode {
             else{
             bsgRobot.arm.setPower(0);
         }
+            if(gamepad1.right_trigger > .1){
+                bsgRobot.extend.setPower(1);
+            }
+            else if (gamepad1.left_trigger > .1){
+                bsgRobot.extend.setPower(-1);
+            }
+            else{
+                bsgRobot.extend.setPower(0);
+            }
             if (gamepad1.right_trigger < .1){
-                bsgRobot.rotationAxel.setPower(1);
+                bsgRobot.intake.setPower(1);
             }
             else if(gamepad1.left_trigger < .1){
-                bsgRobot.rotationAxel.setPower(1);
+                bsgRobot.intake.setPower(1);
         }
             else{
-                bsgRobot.rotationAxel.setPower(0);
+                bsgRobot.intake.setPower(0);
             }
             if(gamepad1.x){
                 bsgRobot.dtSpeed = 0.6;
             }
             else{
                 bsgRobot.dtSpeed = 1.0;
-            }
-            if(gamepad1.right_bumper){
-                bsgRobot.carousel.setPower(-1);
-            }
-            else if (gamepad1.left_bumper){
-                bsgRobot.carousel.setPower(1);
-            }
-            else{
-                bsgRobot.carousel.setPower(0);
             }
         }
     }
