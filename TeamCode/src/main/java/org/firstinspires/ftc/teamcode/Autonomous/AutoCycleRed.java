@@ -80,7 +80,31 @@ public class AutoCycleRed extends LinearOpMode {
 
         bsgRobot.stopMotors();
 
-        
+        bsgRobot.arm.setPower(1);
+        sleep(300);
+
+        bsgRobot.stopMotors();
+
+        encoderDrive(DRIVE_SPEED, 12,12,3);
+
+        bsgRobot.intake.setPower(1);
+        sleep(300);
+
+        bsgRobot.stopMotors();
+
+        bsgRobot.arm.setPower(-1);
+        sleep(500);
+
+        encoderDrive(DRIVE_SPEED, -10,-10,3);
+
+        armEncoderDrive(DRIVE_SPEED, LVL_3_INCHES,3);
+
+        bsgRobot.intake.setPower(-1);
+        sleep(400);
+
+        bsgRobot.stopMotors();
+
+
     }
     /*
       *

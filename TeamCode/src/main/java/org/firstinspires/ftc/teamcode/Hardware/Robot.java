@@ -30,7 +30,7 @@ public class Robot {
 
   //intake system
  public DcMotor arm;
- public CRServo intake;
+ public DcMotor intake;
  public DcMotor extend;
 
   //variables to use IMU's
@@ -64,8 +64,8 @@ public class Robot {
 
     //intake system
    arm = hMap.dcMotor.get("arm");
-   extend = hMap.dcMotor.get("motion");
-   intake = hMap.crservo.get("rotationAxel");
+   extend = hMap.dcMotor.get("extend");
+   intake = hMap.dcMotor.get("intake");
 
     //Telemetry to show on phone to confirm that initialization occurred
     //telemetry.addLine("We done bois");//DS
@@ -188,7 +188,7 @@ public class Robot {
   public void stopMotors() {
     extend.setPower(0);
     arm.setPower(0);
-    intake.setPower(0);
+    //intake.setPower(0);
   }
   public void stopWheels(){
       frontLeft.setPower(0);

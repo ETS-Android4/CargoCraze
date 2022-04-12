@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 
 import java.io.ByteArrayInputStream;
-
+@TeleOp (name = "DsOp")
 public class DsOP extends OpMode {
     Robot bsgRobot = new Robot();
 
@@ -27,8 +28,8 @@ public class DsOP extends OpMode {
 
     @Override
     public void loop() {
-        if (Math.abs(-gamepad1.left_stick_y) > .1) {
-            bsgRobot.drive(-gamepad1.left_stick_y * 0.7);
+        if (Math.abs(gamepad1.left_stick_y) > .1) {
+            bsgRobot.drive(gamepad1.left_stick_y * 0.7);
             telemetry.addLine("Driving F/B");
             telemetry.update();
         } else if (gamepad1.right_stick_x < 0 || gamepad1.right_stick_x > 0) {
@@ -58,31 +59,31 @@ public class DsOP extends OpMode {
 
         }
 
-        if(gamepad1.dpad_up){
+        if(gamepad2.dpad_up){
             bsgRobot.arm.setPower(-1);
         }
 
-            else if (gamepad1.dpad_down){
+            else if (gamepad2.dpad_down){
                 bsgRobot.arm.setPower(1);
             }
             else{
             bsgRobot.arm.setPower(0);
         }
-            if(gamepad1.right_trigger > .1){
+            if(gamepad2.dpad_down){
                 bsgRobot.extend.setPower(1);
             }
-            else if (gamepad1.left_trigger > .1){
+            else if (gamepad2.dpad_up){
                 bsgRobot.extend.setPower(-1);
             }
             else{
                 bsgRobot.extend.setPower(0);
             }
-            if (gamepad1.right_trigger < .1){
+            if (gamepad2.right_trigger < .1){
                 bsgRobot.intake.setPower(1);
             }
-            else if(gamepad1.left_trigger < .1){
+            else if(gamepad2.left_trigger < .1){
                 bsgRobot.intake.setPower(1);
-        }
+        } 
             else{
                 bsgRobot.intake.setPower(0);
             }
