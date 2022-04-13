@@ -29,7 +29,7 @@ public class DsOP extends OpMode {
     @Override
     public void loop() {
         if (Math.abs(gamepad1.left_stick_y) > .1) {
-            bsgRobot.drive(gamepad1.left_stick_y * 0.7);
+            bsgRobot.drive(-gamepad1.left_stick_y * 0.7);
             telemetry.addLine("Driving F/B");
             telemetry.update();
         } else if (gamepad1.right_stick_x < 0 || gamepad1.right_stick_x > 0) {
@@ -69,25 +69,25 @@ public class DsOP extends OpMode {
             else{
             bsgRobot.arm.setPower(0);
         }
-            if(gamepad2.dpad_down){
+            if(gamepad2.left_trigger > .1){
                 bsgRobot.extend.setPower(1);
             }
-            else if (gamepad2.dpad_up){
+            else if (gamepad2.right_trigger > .1){
                 bsgRobot.extend.setPower(-1);
             }
             else{
                 bsgRobot.extend.setPower(0);
             }
-            if (gamepad2.right_trigger < .1){
+            if (gamepad2.y){
                 bsgRobot.intake.setPower(1);
             }
-            else if(gamepad2.left_trigger < .1){
-                bsgRobot.intake.setPower(1);
-        } 
+            else if(gamepad2.x){
+                bsgRobot.intake.setPower(-1);
+        }
             else{
                 bsgRobot.intake.setPower(0);
             }
-            if(gamepad1.x){
+            if(gamepad1.b){
                 bsgRobot.dtSpeed = 0.6;
             }
             else{
