@@ -5,7 +5,9 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -40,6 +42,8 @@ public class Robot {
   public static Orientation angles;
   public Acceleration gravity;
   public static Telemetry telemetry;
+  public TouchSensor touch;
+  public GyroSensor gyro;
 
     //constructor
   public Robot() {
@@ -66,6 +70,7 @@ public class Robot {
    arm = hMap.dcMotor.get("arm");
    extend = hMap.dcMotor.get("extend");
    intake = hMap.dcMotor.get("intake");
+
 
     //Telemetry to show on phone to confirm that initialization occurred
     //telemetry.addLine("We done bois");//DS
@@ -99,14 +104,12 @@ public class Robot {
 
     // At the beginning of each telemetry update, grab a bunch of data
     // from the IMU that we will then display in separate lines.
-    telemetry.addAction(new Runnable() { @Override public void run()
-    {
+    telemetry.addAction(() -> {
       // Acquiring the angles is relatively expensive; we don't want
       // to do that in each of the three items that need that info, as that's
       // three times the necessary expense.
       angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       gravity  = imu.getGravity();
-    }
     });
 
     telemetry.addLine()

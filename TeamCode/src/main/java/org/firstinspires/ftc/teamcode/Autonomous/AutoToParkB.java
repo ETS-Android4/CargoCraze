@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
@@ -10,6 +12,9 @@ import org.firstinspires.ftc.teamcode.Hardware.Robot;
 @Autonomous(name = "BlueParkAuto",group = "BlueAutos")
 public class AutoToParkB extends LinearOpMode {
     Robot bsgRobot = new Robot();
+
+    TouchSensor touch;
+    GyroSensor              gyro;
 
     /*
    *
@@ -40,11 +45,54 @@ public class AutoToParkB extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         bsgRobot.init(hardwareMap);
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status", "Resetting Encoders");    //
+        telemetry.update();
+
+        bsgRobot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgRobot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgRobot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgRobot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        bsgRobot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgRobot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgRobot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgRobot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        telemetry.addData("Mode", "starting gyro calibration...please wait");
+        telemetry.update();
+
+        gyro.calibrate();
+
         bsgRobot.initIMU(hardwareMap);
 
-        encoderDrive(DRIVE_SPEED, 22, 22, 2);
+        while (!isStopRequested() && gyro.isCalibrating())
+        {
+            sleep(50);
+            idle();
+        }
 
-        strafeToPosition(10,DRIVE_SPEED);
+        telemetry.addData("Mode", "gyro calibrated...waiting for start");
+        telemetry.update();
+
+
+        waitForStart();
+
+        telemetry.addData("Mode", "running");
+        telemetry.update();
+
+        gyro.resetZAxisIntegrator();
+        
+        while(opModeIsActive())
+
+
+        telemetry.addData("Forward","Drive Forward");
+        encoderDrive(DRIVE_SPEED, 22, 22, 2);
+        telemetry.update();
+
+        telemetry.addData("Strafe", "Strafe Right");
+        strafeToPosition(20,DRIVE_SPEED);
+        telemetry.update();
 
     }
     /*
@@ -103,18 +151,7 @@ public class AutoToParkB extends LinearOpMode {
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     (bsgRobot.frontLeft.isBusy() && bsgRobot.frontRight.isBusy() &&
-                            bsgRobot.backLeft.isBusy() && bsgRobot.backRight.isBusy())) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d", newFrontLeftTarget, newFrontRightTarget,
-                        newBackLeftTarget, newBackRightTarget);
-                telemetry.addData("Path2", "Running at %7d :%7d",
-                        bsgRobot.frontLeft.getCurrentPosition(),
-                        bsgRobot.backLeft.getCurrentPosition(),
-                        bsgRobot.frontRight.getCurrentPosition(),
-                        bsgRobot.backRight.getCurrentPosition());
-                telemetry.update();
-            }
+                            bsgRobot.backLeft.isBusy() && bsgRobot.backRight.isBusy()))
 
             // Stop all motion;
             bsgRobot.stopWheels();

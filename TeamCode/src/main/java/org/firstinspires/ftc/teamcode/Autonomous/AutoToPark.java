@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
+import android.graphics.Path;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -39,11 +41,30 @@ public class AutoToPark extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         bsgRobot.init(hardwareMap);
+
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status", "Resetting Encoders");    //
+        telemetry.update();
+
+        bsgRobot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgRobot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgRobot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgRobot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        bsgRobot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgRobot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgRobot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgRobot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
         bsgRobot.initIMU(hardwareMap);
+
+        waitForStart();
 
         encoderDrive(DRIVE_SPEED, 22, 22, 2);
 
-        strafeToPosition(-10,DRIVE_SPEED);
+        strafeToPosition(-20, DRIVE_SPEED);
+
 
     }
     /*
@@ -102,18 +123,7 @@ public class AutoToPark extends LinearOpMode {
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     (bsgRobot.frontLeft.isBusy() && bsgRobot.frontRight.isBusy() &&
-                            bsgRobot.backLeft.isBusy() && bsgRobot.backRight.isBusy())) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d", newFrontLeftTarget, newFrontRightTarget,
-                        newBackLeftTarget, newBackRightTarget);
-                telemetry.addData("Path2", "Running at %7d :%7d",
-                        bsgRobot.frontLeft.getCurrentPosition(),
-                        bsgRobot.backLeft.getCurrentPosition(),
-                        bsgRobot.frontRight.getCurrentPosition(),
-                        bsgRobot.backRight.getCurrentPosition());
-                telemetry.update();
-            }
+                            bsgRobot.backLeft.isBusy() && bsgRobot.backRight.isBusy()))
 
             // Stop all motion;
             bsgRobot.stopWheels();
