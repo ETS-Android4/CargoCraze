@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
+
 @Autonomous (name = "RedParkAuto", group = "RedAutos")
 public class AutoToPark extends LinearOpMode {
     Robot bsgRobot = new Robot();
@@ -19,7 +20,7 @@ public class AutoToPark extends LinearOpMode {
    */
     private ElapsedTime runtime = new ElapsedTime();
 
-    static final double COUNTS_PER_MOTOR_REV = 384.5;    // gobilda 435
+    static final double COUNTS_PER_MOTOR_REV = 537.7;    // gobilda 435
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 3.78;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -55,9 +56,6 @@ public class AutoToPark extends LinearOpMode {
         bsgRobot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bsgRobot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bsgRobot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-        bsgRobot.initIMU(hardwareMap);
 
         waitForStart();
 

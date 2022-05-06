@@ -42,7 +42,6 @@ public class Robot {
   public static Orientation angles;
   public Acceleration gravity;
   public static Telemetry telemetry;
-  public TouchSensor touch;
   public GyroSensor gyro;
 
     //constructor
