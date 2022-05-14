@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import android.graphics.Path;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
-
-@Autonomous (name = "BridgeBlueParkAuto", group = "BlueAutos")
-public class AutoToParkB extends LinearOpMode {
+@Autonomous (name = "WarehouseParkBlue", group = "BlueAutos")
+public class RegularBluePark extends LinearOpMode {
     Robot bsgRobot = new Robot();
 
     /*
@@ -63,11 +60,9 @@ public class AutoToParkB extends LinearOpMode {
 
         bsgRobot.stopWheels();
 
-        encoderDrive(DRIVE_SPEED, 22, 22, 2);
+        encoderDrive(DRIVE_SPEED, 30, 22, 2);
 
-        bsgRobot.stopWheels();
 
-        strafeToPosition(-20, DRIVE_SPEED);
 
 
     }
@@ -172,4 +167,3 @@ public class AutoToParkB extends LinearOpMode {
         return;
     }
 }
-

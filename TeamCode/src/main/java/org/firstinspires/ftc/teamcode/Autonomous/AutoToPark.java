@@ -59,9 +59,15 @@ public class AutoToPark extends LinearOpMode {
 
         waitForStart();
 
+        strafeToPosition(-40,DRIVE_SPEED);
+
+        bsgRobot.stopWheels();
+
         encoderDrive(DRIVE_SPEED, 22, 22, 2);
 
-        strafeToPosition(-20, DRIVE_SPEED);
+        bsgRobot.stopWheels();
+
+        strafeToPosition(20, DRIVE_SPEED);
 
 
     }

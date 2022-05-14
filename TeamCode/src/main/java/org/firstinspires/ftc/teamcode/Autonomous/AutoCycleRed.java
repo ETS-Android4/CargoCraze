@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -7,7 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 
 import java.sql.Driver;
-
+@Disabled
+@Autonomous (name = "CycleRed", group = "RedAutos")
 public class AutoCycleRed extends LinearOpMode {
     Robot bsgRobot = new Robot();
 
@@ -50,13 +53,15 @@ public class AutoCycleRed extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         bsgRobot.init(hardwareMap);
-        bsgRobot.initIMU(hardwareMap);
 
         encoderDrive(DRIVE_SPEED, 46,46,3);
 
-        encoderDrive(DRIVE_SPEED, 10,0, 3);
+        encoderDrive(DRIVE_SPEED, -10,0,3);
 
-        encoderDrive(DRIVE_SPEED, 4, 4, 3);
+        bsgRobot.arm.setPower(1);
+        sleep(3000);
+
+        bsgRobot.stopMotors();
 
         bsgRobot.extend.setPower(1);
         sleep(200);
@@ -68,10 +73,14 @@ public class AutoCycleRed extends LinearOpMode {
 
         bsgRobot.stopMotors();
 
+        strafeToPosition(12,DRIVE_SPEED);
+
+        encoderDrive(DRIVE_SPEED, 24,24,3);
+
+        encoderDrive(DRIVE_SPEED, -10,0,3);
+
         bsgRobot.arm.setPower(-1);
         sleep(500);
-
-        encoderDrive(DRIVE_SPEED, -10,-10,3);
 
         armEncoderDrive(DRIVE_SPEED, LVL_3_INCHES,3);
 
